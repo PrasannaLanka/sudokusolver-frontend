@@ -1,0 +1,120 @@
+/* HomePage.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling if not needed */
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensure it covers the full viewport height */
+    width: 100vw; /* Ensure it covers the full viewport width */
+    text-align: center;
+    background-image: url('./background.png'); /* Add your background image */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating */
+    background-attachment: fixed; /* Optional: Fix the background */
+    color: white; /* White text for better contrast */
+    padding: 20px; /* Add some padding for smaller screens */
+    box-sizing: border-box; /* Ensure padding is included in height/width calculation */
+    position: relative; /* Add this to make child positioning easier */
+}
+
+.home-container h1 {
+    font-size: 4rem;
+    color: #ebf6f7; /* White text for better readability */
+    text-shadow: 2px 2px 4px rgba(80, 76, 76, 0.984); /* Add shadow for better contrast */
+    position: absolute; /* Position the h1 absolutely within the container */
+    top: 30px; /* Adjust the top position as needed */
+    left: 200px; /* Adjust the right position as needed */
+    margin: 0; /* Remove default margin */
+}
+
+.home-container p {
+    font-size: 1.2rem;
+    color: #fff; /* White text for better readability */
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better contrast */
+}
+
+/* .home-container button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ff6f61;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+/* } */ */
+
+.home-container button:hover {
+    background-color: #ff3b2f;
+    transform: scale(1.1);
+}
+
+.mascot {
+    width: 150px; /* Adjust size as needed */
+    margin-bottom: 20px;
+    animation: bounce 2s infinite; /* Add bounce animation */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.difficulty-button {
+    position: absolute;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Easy Button - Larger Size */
+.easy {
+    top: 28%;
+    left: 22.4%;
+    padding: 15px 40px; /* Increase padding for larger size */
+    font-size: 38px; /* Increase font size */
+    background: linear-gradient(135deg, #b2d9e2, #72da8a);
+}
+
+/* Medium Button - Medium Size */
+.medium {
+    top: 22.5%;
+    left: 38.45%;    
+    padding: 15px 20px; /* Default padding */
+    font-size: 40px; /* Default font size */
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+
+/* Hard Button - Smaller S15ze */
+.hard {
+    top: 17.5%;
+    right: 33.1%;
+    padding: 10px 50px; /* Decrease padding for smaller size */
+    font-size: 50px; /* Decrease font size */
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+/* Hover Effects */
+.difficulty-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
