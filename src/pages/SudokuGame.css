@@ -1,0 +1,94 @@
+/* Main Container */
+.sudoku-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Title */
+  .sudoku-title {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+  }
+  
+  /* Grid Layout */
+  .sudoku-grid {
+    display: inline-block;
+    border: 3px solid #2c3e50;
+    background: #fff;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Rows */
+  .sudoku-row {
+    display: flex;
+  }
+  
+  /* Cells */
+  .sudoku-cell {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  /* Highlight editable cells */
+  .sudoku-cell:not([disabled]) {
+    background: #f8f9fa;
+    cursor: pointer;
+  }
+  
+  /* 3x3 box borders */
+  .sudoku-cell:nth-child(3n) {
+    border-right: 2px solid #2c3e50;
+  }
+  .sudoku-row:nth-child(3n) {
+    border-bottom: 2px solid #2c3e50;
+  }
+  
+  /* Pre-filled cells (disabled) */
+  .sudoku-cell[disabled] {
+    background: #e9ecef;
+    color: #2c3e50;
+  }
+  
+  /* Buttons */
+  .sudoku-button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: background 0.2s;
+  }
+  .sudoku-button:hover {
+    background: #2980b9;
+  }
+  
+  /* Timer */
+  .sudoku-timer {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #2c3e50;
+    font-weight: bold;
+  }
+  
+  /* Message */
+  .sudoku-message {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #e74c3c;
+    min-height: 1.5rem;
+  }
