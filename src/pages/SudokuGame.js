@@ -7,13 +7,14 @@ function SudokuGame() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const difficulty = queryParams.get('difficulty') || 'medium';
-
+  const [wrongCells, setWrongCells] = useState(new Set());
   const [puzzle, setPuzzle] = useState([]);
   const [solution, setSolution] = useState([]);
   const [userBoard, setUserBoard] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(0);
+  const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
 
   // Format time as MM:SS
   const formatTime = (seconds) => {
@@ -45,16 +46,81 @@ function SudokuGame() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedCell.row === null || selectedCell.col === null) return;
+  
+      const { row, col } = selectedCell;
+      let newRow = row;
+      let newCol = col;
+  
+      if (e.key === "ArrowUp") newRow = row > 0 ? row - 1 : row;
+      else if (e.key === "ArrowDown") newRow = row < 8 ? row + 1 : row;
+      else if (e.key === "ArrowLeft") newCol = col > 0 ? col - 1 : col;
+      else if (e.key === "ArrowRight") newCol = col < 8 ? col + 1 : col;
+      else return;
+  
+      // Skip non-editable cells
+      while (puzzle[newRow][newCol] !== 0) {
+        if (e.key === "ArrowUp" && newRow > 0) newRow--;
+        else if (e.key === "ArrowDown" && newRow < 8) newRow++;
+        else if (e.key === "ArrowLeft" && newCol > 0) newCol--;
+        else if (e.key === "ArrowRight" && newCol < 8) newCol++;
+        else return; // Stop if can't go further
+      }
+  
+      setSelectedCell({ row: newRow, col: newCol });
+  
+      // Focus the next input manually
+      const input = document.getElementById(`cell-${newRow}-${newCol}`);
+      input?.focus();
+    };
+  
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selectedCell, puzzle]);
+  
+  const isValidMove = (board, row, col, val) => {
+    // Check row and column
+    for (let i = 0; i < 9; i++) {
+      if (i !== col && board[row][i] === val) return false;
+      if (i !== row && board[i][col] === val) return false;
+    }
+  
+    // Check 3x3 box
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let r = startRow; r < startRow + 3; r++) {
+      for (let c = startCol; c < startCol + 3; c++) {
+        if ((r !== row || c !== col) && board[r][c] === val) return false;
+      }
+    }
+  
+    return true;
+  };
+  
   const handleChange = (row, col, value) => {
     if (puzzle[row][col] !== 0) return;
-
+  
     if (value === "" || /^[1-9]$/.test(value)) {
+      const val = value ? parseInt(value) : 0;
       const newBoard = userBoard.map((r, i) =>
-        r.map((c, j) => (i === row && j === col ? (value ? parseInt(value) : 0) : c))
+        r.map((c, j) => (i === row && j === col ? val : c))
       );
+  
       setUserBoard(newBoard);
+  
+      const newWrongCells = new Set(wrongCells);
+      if (val !== 0 && !isValidMove(newBoard, row, col, val)) {
+        newWrongCells.add(`${row}-${col}`);
+      } else {
+        newWrongCells.delete(`${row}-${col}`);
+      }
+      setWrongCells(newWrongCells);
     }
   };
+  
+  
 
   const checkSolution = async () => {
     try {
@@ -98,15 +164,21 @@ function SudokuGame() {
         {puzzle.map((row, rIndex) => (
           <div key={rIndex} className="sudoku-row">
             {row.map((num, cIndex) => (
-              <input
-                key={cIndex}
-                type="text"
-                maxLength="1"
-                value={userBoard[rIndex][cIndex] || ""}
-                onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
-                disabled={puzzle[rIndex][cIndex] !== 0}
-                className="sudoku-cell"
-              />
+             <input
+             id={`cell-${rIndex}-${cIndex}`}
+             key={cIndex}
+             type="text"
+             maxLength="1"
+             value={userBoard[rIndex][cIndex] || ""}
+             onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
+             onFocus={() => setSelectedCell({ row: rIndex, col: cIndex })}
+             disabled={puzzle[rIndex][cIndex] !== 0}
+             className={`sudoku-cell ${
+               wrongCells.has(`${rIndex}-${cIndex}`) ? "wrong-cell" : ""
+             } ${selectedCell.row === rIndex && selectedCell.col === cIndex ? "selected-cell" : ""}`}
+           />
+           
+            
             ))}
           </div>
         ))}

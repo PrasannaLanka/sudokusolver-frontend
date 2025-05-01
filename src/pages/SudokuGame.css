@@ -92,3 +92,12 @@
     color: #e74c3c;
     min-height: 1.5rem;
   }
+  .sudoku-cell.wrong-cell {
+    background-color: #ffe6e6;
+    border: 1px solid red;
+  }
+  
+  .selected-cell {
+    border: 2px solid #4caf50;
+  }
+  
