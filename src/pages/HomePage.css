@@ -121,9 +121,9 @@ html, body {
 
 .image-button {
     position: absolute;      
-    top: 5px;               /* adjust as needed */
-    right: 128px;             /* adjust as needed */
-    width: 130px;            
+    top: 2px;               /* adjust as needed */
+    right: 75px;             /* adjust as needed */
+    width: 235px;            
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;

@@ -1,0 +1,63 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3); /* dim background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #ffe6f0; /* pastel pink to match your background */
+    border-radius: 25px;
+    padding: 40px 30px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-family: 'Baloo 2', 'Comic Sans MS', cursive;
+    max-width: 350px;
+    width: 90%;
+}
+
+.modal-content h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #ff4d88; /* vibrant pink/red */
+}
+
+.modal-content button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    font-size: 18px;
+    background-color: #ff99cc; /* soft pink */
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content button:hover {
+    background-color: #ff66a3; /* deeper pink */
+    color: white;
+    transform: scale(1.05);
+}
+
+.modal {
+    background-color: #fff7f0; /* soft cream background */
+    color: #3b3b3b;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff6f61; /* pastel red */
+}

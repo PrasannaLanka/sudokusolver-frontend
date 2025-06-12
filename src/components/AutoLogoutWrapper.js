@@ -1,37 +1,41 @@
-// src/components/AutoLogoutWrapper.js
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const AutoLogoutWrapper = ({ children, timeout = 15 * 60 * 1000 }) => {
-  // default timeout: 15 minutes
-
   const { logout } = useAuth();
   const timerId = useRef(null);
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     if (timerId.current) clearTimeout(timerId.current);
     timerId.current = setTimeout(() => {
       logout();
       alert("Logged out due to inactivity");
     }, timeout);
-  };
+  }, [logout, timeout]);
 
   useEffect(() => {
+    const handleActivity = () => {
+      if (document.visibilityState === "visible") {
+        resetTimer();
+      }
+    };
+
     resetTimer();
 
-    window.addEventListener("mousemove", resetTimer);
-    window.addEventListener("keydown", resetTimer);
-    window.addEventListener("click", resetTimer);
-    window.addEventListener("scroll", resetTimer);
+    const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
+    events.forEach((event) =>
+      window.addEventListener(event, handleActivity)
+    );
+    document.addEventListener("visibilitychange", handleActivity);
 
     return () => {
       if (timerId.current) clearTimeout(timerId.current);
-      window.removeEventListener("mousemove", resetTimer);
-      window.removeEventListener("keydown", resetTimer);
-      window.removeEventListener("click", resetTimer);
-      window.removeEventListener("scroll", resetTimer);
+      events.forEach((event) =>
+        window.removeEventListener(event, handleActivity)
+      );
+      document.removeEventListener("visibilitychange", handleActivity);
     };
-  }, []);
+  }, [resetTimer]);
 
   return <>{children}</>;
 };

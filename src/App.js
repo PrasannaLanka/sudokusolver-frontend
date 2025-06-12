@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage";
 import SudokuGame from "./pages/SudokuGame";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import HelpPage from "./pages/HelpPage";
+
 import AutoLogoutWrapper from "./components/AutoLogoutWrapper";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
@@ -53,6 +55,14 @@ function App() {
               </PrivateRoute>
             }
           />
+           <Route
+    path="/help"
+    element={
+      <PrivateRoute>
+        <HelpPage />
+      </PrivateRoute>
+    }
+  />
         </Routes>
       </AutoLogoutWrapper>
     </Router>

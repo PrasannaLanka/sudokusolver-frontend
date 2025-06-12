@@ -1,16 +1,32 @@
 // HomePage.js
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css"; // Import the CSS file for styling
 import customButtonImage from "../assets/settings.png"; 
+import SettingsModal from "./SettingsModal"; 
 function HomePage() {
     const navigate = useNavigate();
+
+    const [showModal, setShowModal] = useState(false);
 
     const handleDifficultyClick = (difficulty) => {
         navigate(`/play?difficulty=${difficulty}`);
     };
     const handleCustomClick = () => {
-        navigate("/custom");
+        setShowModal(true); // Correct way to open modal
+    };
+    
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
+    const handleHelp = () => {
+        navigate("/help"); // instead of alert
+    };
+    
+    const closeModal = () => {
+        setShowModal(false);
     };
     return (
         <div className="home-container">
@@ -41,6 +57,14 @@ function HomePage() {
                 className="image-button"
                 onClick={handleCustomClick}
             />
+
+            {showModal && (
+                <SettingsModal
+                    onClose={closeModal}
+                    onHelp={handleHelp}
+                    onLogout={handleLogout}
+                />
+            )}
         </div>
     );
 }
