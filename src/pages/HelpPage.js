@@ -1,7 +1,7 @@
 // src/pages/HelpPage.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import howToPlayGif from "../assets/help";
+import howToPlayGif from "../assets/help.png";
 import "./HelpPage.css"; // Optional for styling
 
 function HelpPage() {

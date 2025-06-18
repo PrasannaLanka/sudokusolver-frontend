@@ -1,103 +1,162 @@
-/* Main Container */
+/* Background for the full game page */
 .sudoku-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  /* Title */
-  .sudoku-title {
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    font-size: 2.2rem;
-  }
-  
-  /* Grid Layout */
-  .sudoku-grid {
-    display: inline-block;
-    border: 3px solid #2c3e50;
-    background: #fff;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Rows */
-  .sudoku-row {
-    display: flex;
-  }
-  
-  /* Cells */
-  .sudoku-cell {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border: 1px solid #ddd;
-    outline: none;
-    transition: all 0.2s;
-  }
-  
-  /* Highlight editable cells */
-  .sudoku-cell:not([disabled]) {
-    background: #f8f9fa;
-    cursor: pointer;
-  }
-  
-  /* 3x3 box borders */
-  .sudoku-cell:nth-child(3n) {
-    border-right: 2px solid #2c3e50;
-  }
-  .sudoku-row:nth-child(3n) {
-    border-bottom: 2px solid #2c3e50;
-  }
-  
-  /* Pre-filled cells (disabled) */
-  .sudoku-cell[disabled] {
-    background: #e9ecef;
-    color: #2c3e50;
-  }
-  
-  /* Buttons */
-  .sudoku-button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    margin: 0 0.5rem;
-    transition: background 0.2s;
-  }
-  .sudoku-button:hover {
-    background: #2980b9;
-  }
-  
-  /* Timer */
-  .sudoku-timer {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    color: #2c3e50;
-    font-weight: bold;
-  }
-  
-  /* Message */
-  .sudoku-message {
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    color: #e74c3c;
-    min-height: 1.5rem;
-  }
-  .sudoku-cell.wrong-cell {
-    background-color: #ffe6e6;
-    border: 1px solid red;
-  }
-  
-  .selected-cell {
-    border: 2px solid black;
-  }
-  
+  position: fixed; /* Ensures it covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem;
+
+  background-image: url("../assets/gamebg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Title Styling */
+.sudoku-title {
+  /* Updated to White for good contrast on turquoise */
+  color: #001e30; /* White */
+  font-size: 2.5rem;
+  font-weight: bold;
+  /* Adjust text-shadow for better visibility on a lighter background */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Softer, more visible shadow */
+  margin-bottom: 1rem;
+  /* Optional: Add a playful font-family if you have one loaded */
+  /* font-family: 'Comic Sans MS', cursive; */
+}
+
+/* Timer */
+.sudoku-timer {
+  font-size: 1.5rem; /* Slightly larger for kids */
+  /* Updated to White for good contrast on turquoise */
+  color: #FFFFFF; /* White */
+  margin-bottom: 1.5rem;
+  font-weight: bold; /* Make it stand out more */
+}
+
+/* Grid styling */
+.sudoku-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Slightly larger gap for visual separation */
+  margin-bottom: 1.5rem;
+   border: 4px solid #4b0158; /*Navy Blue border for the whole grid */
+  border-radius: 10px; /* Rounded corners for the grid container */
+  padding: 4px; /* Padding inside the grid border */
+  background-color: #4b0158; 
+}
+.sudoku-row {
+  display: flex;
+  gap: 4px; /* Slightly larger gap for visual separation */
+}
+.sudoku-cell {
+  width: 45px; /* Slightly larger cells */
+  height: 45px; /* Slightly larger cells */
+  display: flex; /* Use flexbox to center content vertically and horizontally */
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem; /* Larger font size for numbers */
+  font-weight: bold; /* Make numbers bolder */
+  border: none; /* No individual cell borders, gaps define separation */
+  border-radius: 8px; /* More rounded corners for cells */
+  /* Updated default background color for empty cells */
+  background-color: white; /* Light Yellow */
+  color: #4b0158; /* Navy Blue for numbers */
+  transition: background 0.2s ease, transform 0.1s ease; /* Add transform for hover/active feedback */
+  cursor: pointer; /* Indicate it's clickable */
+}
+.sudoku-cell:hover {
+  transform: scale(1.05); /* Slight scale on hover for interactivity */
+}
+
+.sudoku-cell:active {
+  transform: scale(0.98); /* Slight press effect on click */
+}
+
+
+.sudoku-cell:disabled {
+  /* Updated background color for pre-filled cells */
+  background-color: #c3d5d6; /* Peach Puff */
+  font-weight: bold;
+  /* Updated color for pre-filled numbers */
+    cursor: default; /* No pointer cursor for disabled cells */
+  transform: none; /* No hover/active effect on disabled cells */
+}
+/* Selected cell */
+.selected-cell {
+  /* Make selected cell stand out with a subtle glow or darker shade */
+  background-color: #e7d8b3; /* A slightly deeper yellow for selection */
+  box-shadow: 0 0 8px #FF6347; /* Subtle glow with button color */
+}
+
+/* Wrong input cell */
+.wrong-cell {
+  background-color: #FF7070; /* A clear, slightly darker red for wrong */
+  color: #FFFFFF; /* White text on red for high contrast */
+  animation: shake 0.3s; /* Add a little shake animation */
+}
+
+/* Shake animation for wrong cells */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+/* Buttons */
+.button-group {
+  display: flex;
+  gap: 15px; /* More space between buttons */
+  margin-bottom: 1rem;
+}
+
+.sudoku-button {
+  /* Updated button background color */
+  background-color: #FF6347; /* Tomato Red-Orange */
+  color: #FFFFFF; /* White */
+  border: none;
+  padding: 12px 25px; /* Larger padding for easier clicking */
+  font-size: 1.1rem; /* Slightly larger font */
+  font-weight: bold; /* Make button text bold */
+  border-radius: 12px; /* More rounded corners */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease; /* Add transform for hover/active */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.sudoku-button:hover {
+  background-color: #E04E35; /* Slightly darker shade on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+.sudoku-button:active {
+  transform: translateY(0); /* Press effect on click */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Reduce shadow on active */
+}
+/* Message styling */
+.sudoku-message {
+  margin-top: 15px; /* More space */
+  font-size: 1.4rem; /* Larger font for messages */
+  /* Updated color for messages */
+  color: #FFFFFF; /* White on turquoise */
+  text-align: center;
+  font-weight: bold;
+}
+
+
+/* Loading Spinner */
+.loading-spinner {
+  font-size: 2rem; /* Larger spinner */
+  color: #FFFFFF; /* White on turquoise */
+  margin-top: 2rem;
+}

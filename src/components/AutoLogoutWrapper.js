@@ -15,9 +15,9 @@ const AutoLogoutWrapper = ({ children, timeout = 15 * 60 * 1000 }) => {
 
   useEffect(() => {
     const handleActivity = () => {
-      if (document.visibilityState === "visible") {
+      
         resetTimer();
-      }
+      
     };
 
     resetTimer();

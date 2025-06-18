@@ -220,6 +220,7 @@ const SudokuGame = () => {
                 key={cIndex}
                 type="text"
                 maxLength="1"
+                autoComplete="off" 
                 value={userBoard[rIndex][cIndex] || ""}
                 onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
                 onFocus={() => setSelectedCell({ row: rIndex, col: cIndex })}
