@@ -107,7 +107,24 @@ const SudokuGame = () => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [selectedCell, puzzle]);
-
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (selectedCell.row === null || selectedCell.col === null) return;
+  
+      const { row, col } = selectedCell;
+      if (puzzle[row][col] !== 0) return;
+  
+      if (/^[1-9]$/.test(e.key)) {
+        handleChange(row, col, parseInt(e.key));
+      } else if (e.key === "Backspace" || e.key === "Delete") {
+        handleChange(row, col, 0);
+      }
+    };
+  
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, [selectedCell, puzzle]);
+  
   const isValidMove = (board, row, col, val) => {
     for (let i = 0; i < 9; i++) {
       if (i !== col && board[row][i] === val) return false;
@@ -215,24 +232,25 @@ const SudokuGame = () => {
         {puzzle.map((row, rIndex) => (
           <div key={rIndex} className="sudoku-row">
             {row.map((num, cIndex) => (
-              <input
-                id={`cell-${rIndex}-${cIndex}`}
-                key={cIndex}
-                type="text"
-                maxLength="1"
-                autoComplete="off" 
-                value={userBoard[rIndex][cIndex] || ""}
-                onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
-                onFocus={() => setSelectedCell({ row: rIndex, col: cIndex })}
-                disabled={puzzle[rIndex][cIndex] !== 0}
-                className={`sudoku-cell ${
-                  wrongCells.has(`${rIndex}-${cIndex}`) ? "wrong-cell" : ""
-                } ${
-                  selectedCell.row === rIndex && selectedCell.col === cIndex
-                    ? "selected-cell"
-                    : ""
-                }`}
-              />
+          <div
+          key={cIndex}
+          id={`cell-${rIndex}-${cIndex}`}
+          tabIndex={0}
+          onClick={() => setSelectedCell({ row: rIndex, col: cIndex })}
+          className={`sudoku-cell
+            ${rIndex % 3 === 0 ? "box-border-top" : ""}
+            ${cIndex % 3 === 0 ? "box-border-left" : ""}
+            ${rIndex === 8 ? "box-border-bottom" : ""}
+            ${cIndex === 8 ? "box-border-right" : ""}
+            ${selectedCell.row === rIndex && selectedCell.col === cIndex ? "selected-cell" : ""}
+            ${wrongCells.has(`${rIndex}-${cIndex}`) ? "wrong-cell" : ""}
+            ${puzzle[rIndex][cIndex] !== 0 ? "prefilled-cell" : "editable-cell"}
+          `}
+        >
+          {userBoard[rIndex][cIndex] || ""}
+        </div>
+        
+            
             ))}
           </div>
         ))}
