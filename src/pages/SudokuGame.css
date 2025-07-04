@@ -138,7 +138,7 @@
 }
 
 .sudoku-button {
-  background-color: #FF6347;
+  background-color:  #ff66a3;
   color: white;
   border: none;
   padding: 12px 25px;
@@ -151,7 +151,7 @@
 }
 
 .sudoku-button:hover {
-  background-color: #E04E35;
+  background-color: #ff66a3; 
   transform: translateY(-2px);
 }
 .sudoku-button:active {

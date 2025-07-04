@@ -121,7 +121,7 @@ html, body {
 
 .image-button {
     position: absolute;      
-    top: 2px;               /* adjust as needed */
+    top: 0px;               /* adjust as needed */
     right: 75px;             /* adjust as needed */
     width: 235px;            
     height: auto;
@@ -131,4 +131,5 @@ html, body {
 
 .image-button:hover {
     transform: scale(1.1);
+    filter: drop-shadow(0 0 6px #faee7f);
 }

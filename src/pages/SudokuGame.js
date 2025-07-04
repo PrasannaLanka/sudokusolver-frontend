@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SudokuGame.css";
+import SettingsModal from "./SettingsModal";
+import customButtonImage from "../assets/settings.png"; 
+import ResultModal from "../components/ResultsModal.js"; 
 
 const SudokuGame = () => {
   const location = useLocation();
@@ -18,11 +21,24 @@ const SudokuGame = () => {
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(0);
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
-
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [resultStatus, setResultStatus] = useState(""); // 'You won!' or 'Invalid solution' etc.
+  
   // Get token from localStorage
   const token = localStorage.getItem("token");
 
-  // Redirect to login if no token
+ 
+const [showModal, setShowModal] = useState(false);
+
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  navigate("/login");
+};
+
+const handleHelp = () => {
+  navigate("/help");
+};
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -162,27 +178,36 @@ const SudokuGame = () => {
   };
 
   const checkSolution = async () => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
+    if (!token) return navigate("/login");
+  
     try {
       const response = await axios.post(
         "http://localhost:5000/check",
         { board: userBoard, solution },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+  
       setMessage(response.data.message);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        navigate("/login");
-      } else {
-        setMessage(error.response?.data?.message || "Error checking solution");
+      setResultStatus(response.data.message);
+      setShowResultModal(true);
+  
+      // Optional: Send stats to backend
+      if (response.data.status === "success") {
+        await axios.post(
+          "http://localhost:5000/record_game",
+          { timeTaken: time },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       }
+  
+    } catch (error) {
+      const msg = error.response?.data?.message || "Error checking solution";
+      setMessage(msg);
+      setResultStatus(msg);
+      setShowResultModal(true);
     }
   };
+  
 
   const resetGame = () => {
     if (!token) {
@@ -255,10 +280,34 @@ const SudokuGame = () => {
           </div>
         ))}
       </div>
+      <img
+  src={customButtonImage}
+  alt="Settings"
+  className="image-button"
+  onClick={() => setShowModal(true)}
+/>
+
+{showModal && (
+  <SettingsModal
+    onClose={() => setShowModal(false)}
+    onHelp={handleHelp}
+    onLogout={handleLogout}
+  />
+)}
+<ResultModal
+  show={showResultModal}
+  message={resultStatus}
+  time={formatTime(time)}
+  onClose={() => setShowResultModal(false)}
+  onNewGame={resetGame}
+  onLogout={handleLogout}
+  onHome={() => navigate("/")}
+/>
+
 
       <div className="button-group">
         <button className="sudoku-button" onClick={checkSolution}>
-          Check Solution
+          Submit
         </button>
         <button className="sudoku-button" onClick={resetGame}>
           New Game
