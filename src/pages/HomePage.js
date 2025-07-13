@@ -28,6 +28,37 @@ function HomePage() {
     const closeModal = () => {
         setShowModal(false);
     };
+    const handleResumeClick = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await fetch("http://localhost:5000/resume_game", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+      
+          if (response.status === 404) {
+            alert("No saved game found!");
+            return;
+          }
+      
+          const data = await response.json();
+          navigate("/play", {
+            state: {
+              resumeGame: true,
+              puzzle: data.puzzle,
+              progress: data.progress,
+              solution: data.solution,
+              time: data.time 
+            }
+          });
+        } catch (error) {
+          console.error("Error resuming game:", error);
+          alert("Failed to resume game.");
+        }
+      };
+      
     return (
         <div className="home-container">
             <h1>LET'S SOLVE SUDOKU</h1>
@@ -63,6 +94,7 @@ function HomePage() {
                     onClose={closeModal}
                     onHelp={handleHelp}
                     onLogout={handleLogout}
+                    onResume = {handleResumeClick}
                 />
             )}
         </div>

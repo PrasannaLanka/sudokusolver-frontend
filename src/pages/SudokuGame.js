@@ -1,5 +1,5 @@
 // pages/SudokuGame.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SudokuGame.css";
@@ -23,12 +23,35 @@ const SudokuGame = () => {
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
   const [showResultModal, setShowResultModal] = useState(false);
   const [resultStatus, setResultStatus] = useState(""); // 'You won!' or 'Invalid solution' etc.
-  
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef(null);
   // Get token from localStorage
   const token = localStorage.getItem("token");
 
  
 const [showModal, setShowModal] = useState(false);
+const calculateWrongCells = (board, puzzle) => {
+  const wrongs = new Set();
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (puzzle[i][j] === 0 && board[i][j] !== 0) {
+        if (!isValidMove(board, i, j, board[i][j])) {
+          wrongs.add(`${i}-${j}`);
+        }
+      }
+    }
+  }
+  return wrongs;
+};
+useEffect(() => {
+  if (!isPaused) {
+    timerRef.current = setInterval(() => {
+      setTime((prev) => prev + 1);
+    }, 1000);
+  }
+
+  return () => clearInterval(timerRef.current);
+}, [isPaused]);
 
 const handleLogout = () => {
   localStorage.removeItem("token");
@@ -55,7 +78,25 @@ const handleHelp = () => {
   // Fetch new puzzle on difficulty change
   useEffect(() => {
     if (!token) return;
+    const resumeData = location.state?.resumeGame;
 
+    if (resumeData) {
+      const resumedPuzzle = location.state.puzzle;
+      const resumedSolution = location.state.solution;
+      const resumedProgress = location.state.progress;
+      const resumedTime = location.state.time || 0;
+    
+      setPuzzle(resumedPuzzle);
+      setSolution(resumedSolution);
+      setUserBoard(resumedProgress);
+      setTime(resumedTime);
+      setMessage("");
+      setWrongCells(calculateWrongCells(resumedProgress, resumedPuzzle));
+      setLoading(false);
+      return;
+    }
+    
+  
     setLoading(true);
     axios
       .get(`http://localhost:5000/generate?difficulty=${difficulty}`, {
@@ -82,15 +123,7 @@ const handleHelp = () => {
       });
   }, [difficulty, token, navigate]);
 
-  // Timer increment
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prev) => prev + 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Keyboard navigation between cells
+   // Keyboard navigation between cells
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedCell.row === null || selectedCell.col === null) return;
@@ -125,6 +158,8 @@ const handleHelp = () => {
   }, [selectedCell, puzzle]);
   useEffect(() => {
     const handleKeyPress = (e) => {
+      if (isPaused) return;
+
       if (selectedCell.row === null || selectedCell.col === null) return;
   
       const { row, col } = selectedCell;
@@ -205,6 +240,33 @@ const handleHelp = () => {
       setMessage(msg);
       setResultStatus(msg);
       setShowResultModal(true);
+    }
+  };
+  
+  const handlePauseAndSave = async () => {
+    if (!isPaused) {
+      // We're pausing
+      try {
+        await axios.post(
+          "http://localhost:5000/save_game",
+          {
+            puzzle,
+            progress: userBoard,
+            solution
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        setIsPaused(true); 
+       
+      } catch (error) {
+        alert("Failed to save game.");
+        console.error(error);
+      }
+    } else {
+      
+      setIsPaused(false);
     }
   };
   
@@ -312,6 +374,11 @@ const handleHelp = () => {
         <button className="sudoku-button" onClick={resetGame}>
           New Game
         </button>
+        <button className="sudoku-button" onClick={handlePauseAndSave}>
+  {isPaused ? "Resume" : "Pause & Save"}
+</button>
+
+
       </div>
 
       {message && <div className="sudoku-message">{message}</div>}

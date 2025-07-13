@@ -1,7 +1,8 @@
 import React from "react";
 import "./SettingsModal.css";
 
-const SettingsModal = ({ onClose, onHelp, onLogout }) => {
+const SettingsModal = ({ onClose, onHelp, onLogout, onResume }) => {
+
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -10,6 +11,11 @@ const SettingsModal = ({ onClose, onHelp, onLogout }) => {
                 <button onClick={onHelp}>Help</button>
                 <button onClick={onLogout}>Logout</button>
                 <button onClick={onClose}>Close</button>
+                <button  onClick={onResume}
+>
+  Resume Game
+</button>
+
             </div>
         </div>
     );
