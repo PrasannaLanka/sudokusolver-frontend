@@ -11,11 +11,6 @@ const SettingsModal = ({ onClose, onHelp, onLogout, onResume }) => {
                 <button onClick={onHelp}>Help</button>
                 <button onClick={onLogout}>Logout</button>
                 <button onClick={onClose}>Close</button>
-                <button  onClick={onResume}
->
-  Resume Game
-</button>
-
             </div>
         </div>
     );

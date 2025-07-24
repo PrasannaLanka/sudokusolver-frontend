@@ -167,14 +167,14 @@ const handleHelp = () => {
   
       if (/^[1-9]$/.test(e.key)) {
         handleChange(row, col, parseInt(e.key));
-      } else if (e.key === "Backspace" || e.key === "Delete") {
+      } else  {
         handleChange(row, col, 0);
       }
     };
   
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [selectedCell, puzzle]);
+  }, [selectedCell, puzzle, isPaused]);
   
   const isValidMove = (board, row, col, val) => {
     for (let i = 0; i < 9; i++) {
@@ -193,9 +193,8 @@ const handleHelp = () => {
 
   const handleChange = (row, col, value) => {
     if (puzzle[row][col] !== 0) return;
-
-    if (value === "" || /^[1-9]$/.test(value)) {
-      const val = value ? parseInt(value) : 0;
+      if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
+      const val = value ? parseInt(value) : 0;  
       const newBoard = userBoard.map((r, i) =>
         r.map((c, j) => (i === row && j === col ? val : c))
       );
@@ -218,7 +217,7 @@ const handleHelp = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/check",
-        { board: userBoard, solution },
+        { board: userBoard, solution},
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
@@ -230,7 +229,7 @@ const handleHelp = () => {
       if (response.data.status === "success") {
         await axios.post(
           "http://localhost:5000/record_game",
-          { timeTaken: time },
+          { timeTaken: time ,  difficulty: difficulty,  date: new Date().toISOString().split("T")[0],},
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
@@ -276,6 +275,7 @@ const handleHelp = () => {
       navigate("/login");
       return;
     }
+    setIsPaused(false);  
     setLoading(true);
     axios
       .get(`http://localhost:5000/generate?difficulty=${difficulty}`, {
