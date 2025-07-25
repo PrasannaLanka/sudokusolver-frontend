@@ -24,6 +24,12 @@ function HomePage() {
     const handleHelp = () => {
         navigate("/help"); // instead of alert
     };
+    const handleHome = () => {
+        navigate("/home"); 
+    };
+    const handleLeaderboard = () => {
+        navigate("/leaderboard"); 
+    };
     
     const closeModal = () => {
         setShowModal(false);
@@ -92,7 +98,9 @@ function HomePage() {
             {showModal && (
                 <SettingsModal
                     onClose={closeModal}
+                    onHome = {handleHome}
                     onHelp={handleHelp}
+                    onLeaderboard={handleLeaderboard}
                     onLogout={handleLogout}
                     onResume = {handleResumeClick}
                 />

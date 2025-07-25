@@ -61,7 +61,12 @@ const handleLogout = () => {
 const handleHelp = () => {
   navigate("/help");
 };
-
+const handleHome = () => {
+  navigate("/home");
+};
+const handleLeaderboard = () => {
+  navigate("/leaderboard"); 
+};
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -352,6 +357,8 @@ const handleHelp = () => {
 {showModal && (
   <SettingsModal
     onClose={() => setShowModal(false)}
+    onHome = {handleHome}
+    onLeaderboard={handleLeaderboard}
     onHelp={handleHelp}
     onLogout={handleLogout}
   />

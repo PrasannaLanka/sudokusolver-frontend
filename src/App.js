@@ -10,6 +10,8 @@ import HelpPage from "./pages/HelpPage";
 import AutoLogoutWrapper from "./components/AutoLogoutWrapper";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
+import Leaderboard from './pages/Leaderboard';
+
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -63,6 +65,10 @@ function App() {
       </PrivateRoute>
     }
   />
+  <Route path="/leaderboard" element={
+  <PrivateRoute><Leaderboard /></PrivateRoute>
+    } />
+
         </Routes>
       </AutoLogoutWrapper>
     </Router>
