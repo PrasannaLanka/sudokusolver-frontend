@@ -234,9 +234,17 @@ const handleLeaderboard = () => {
       if (response.data.status === "success") {
         await axios.post(
           "http://localhost:5000/record_game",
-          { timeTaken: time ,  difficulty: difficulty,  date: new Date().toISOString().split("T")[0],},
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            timeTaken: time,
+            difficulty: difficulty,
+            date: new Date().toISOString().split("T")[0],
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true  // <--- IMPORTANT
+          }
         );
+        
       }
   
     } catch (error) {

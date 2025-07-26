@@ -10,46 +10,58 @@ const Leaderboard = () => {
   const [scores, setScores] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
-      .get(`/api/leaderboard?difficulty=${difficulty}`)
+      .get(`http://localhost:5000/leaderboard?difficulty=${difficulty}`)
       .then((res) => setScores(res.data))
       .catch((err) => console.error(err));
   }, [difficulty]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
-};
+  };
 
-const handleHelp = () => {
+  const handleHelp = () => {
     navigate("/help"); 
-};
-const handleHome = () => {
+  };
+
+  const handleHome = () => {
     navigate("/home"); 
-};
+  };
 
-const handleClose = () => {
+  const handleClose = () => {
     setShowModal(false);
-};
-const handleLeaderboard = () => {
-  navigate("/leaderboard"); 
-};
-const handleCustomClick = () => {
-  setShowModal(true); // Correct way to open modal
-};
+  };
 
+  const handleLeaderboard = () => {
+    navigate("/leaderboard"); 
+  };
+
+  const handleCustomClick = () => {
+    setShowModal(true);
+  };
+
+  // ✅ Add this helper function
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}m ${secs < 10 ? '0' : ''}${secs}s`;
+  };
 
   return (
     <div className="leaderboard-wrapper">
-       <img
-                src={customButtonImage}
-                alt="Custom Mode"
-                className="image-button"
-                onClick={handleCustomClick}
-            />
+      <img
+        src={customButtonImage}
+        alt="Custom Mode"
+        className="image-button"
+        onClick={handleCustomClick}
+      />
+
       {showModal && (
         <SettingsModal
-          onClose={ handleClose}
+          onClose={handleClose}
           onHome={handleHome}
           onHelp={handleHelp}
           onLogout={handleLogout}
@@ -70,17 +82,19 @@ const handleCustomClick = () => {
               </button>
             ))}
           </div>
-        
         </div>
 
-        <h2 className="leaderboard-title">🏆 {difficulty[0].toUpperCase() + difficulty.slice(1)} Leaderboard</h2>
+        <h2 className="leaderboard-title">
+          🏆 {difficulty[0].toUpperCase() + difficulty.slice(1)} Leaderboard
+        </h2>
 
         <table className="leaderboard-table">
           <thead>
             <tr>
               <th>Rank</th>
               <th>Username</th>
-              <th>Time (s)</th>
+              {/* ✅ Change header label */}
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +105,8 @@ const handleCustomClick = () => {
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>{entry.username}</td>
-                  <td>{entry.time_taken}</td>
+                  {/* ✅ Use formatted time here */}
+                  <td>{formatTime(entry.time_taken)}</td>
                 </tr>
               ))
             )}
