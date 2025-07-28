@@ -244,6 +244,13 @@ const handleLeaderboard = () => {
             withCredentials: true  // <--- IMPORTANT
           }
         );
+        await axios.post(
+          "http://localhost:5000/update_streak",
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
         
       }
   
