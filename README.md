@@ -5,7 +5,7 @@ This is the **React-based frontend** of the Sudoku Solver — a fun, kid-friendl
 ---
 
 ## 🔗 Backend Repo  
-👉 [Sudoku Backend (Flask)](https://github.com/PrasannaLanka/sudokusolver-backend.git)
+👉 [Sudoku Backend](https://github.com/PrasannaLanka/sudokusolver-backend.git)
 
 ---
 
@@ -56,7 +56,7 @@ This is the **React-based frontend** of the Sudoku Solver — a fun, kid-friendl
 ## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/your-username/sudoku-frontend.git](https://github.com/PrasannaLanka/sudokusolver-frontend.git
+git clone https://github.com/PrasannaLanka/sudokusolver-frontend.git
 cd sudoku-frontend
 npm install
 npm start
