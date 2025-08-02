@@ -174,3 +174,94 @@
   color: white;
   margin-top: 2rem;
 }
+
+
+/* Tablet: ≤1024px */
+@media screen and (max-width: 1024px) {
+  .sudoku-container {
+    padding: 1.5rem;
+  }
+
+  .sudoku-title {
+    font-size: 2.2rem;
+  }
+
+  .sudoku-timer {
+    font-size: 1.3rem;
+  }
+
+  .sudoku-cell {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+
+  .sudoku-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+/* Mobile: ≤768px */
+@media screen and (max-width: 768px) {
+  .sudoku-container {
+    padding: 1rem;
+  }
+
+  .sudoku-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .sudoku-timer {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .sudoku-cell {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .sudoku-button {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/* Small Mobile: ≤480px */
+@media screen and (max-width: 480px) {
+  .sudoku-container {
+    padding: 0.5rem;
+  }
+
+  .sudoku-title {
+    font-size: 1.6rem;
+  }
+
+  .sudoku-timer {
+    font-size: 1rem;
+  }
+
+  .sudoku-cell {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .sudoku-button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .sudoku-message {
+    font-size: 1.2rem;
+  }
+}

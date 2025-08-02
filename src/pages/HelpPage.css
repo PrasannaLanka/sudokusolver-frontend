@@ -1,31 +1,95 @@
-/* src/pages/HelpPage.css */
 .help-page {
-    text-align: center;
-    padding: 2rem;
-    background-color: #f9f9f9; /* Match your theme if needed */
+  text-align: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+.help-page h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.help-page p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.help-gif {
+  max-width: 90%;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Button styling */
+.help-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 1.5rem;
+}
+
+.help-buttons button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff753e;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.help-buttons button:hover {
+  background-color: #dc412c;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 768px) {
+  .help-page {
+    padding: 1rem;
   }
-  
-  .help-gif {
-    max-width: 90%;
-    height: auto;
-    margin: 20px 0;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  .help-page h1 {
+    font-size: 2rem;
   }
-  
-  .help-buttons button {
-    margin: 10px;
-    padding: 10px 20px;
+
+  .help-page p {
     font-size: 1rem;
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    background-color: #ff753e;
-    color: white;
-    transition: background 0.3s ease;
   }
-  
-  .help-buttons button:hover {
-    background-color: #dc412c;
+
+  .help-buttons {
+    flex-direction: column;
+    align-items: center;
   }
-  
+
+  .help-buttons button {
+    width: 80%;
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .help-page h1 {
+    font-size: 1.7rem;
+  }
+
+  .help-page p {
+    font-size: 0.95rem;
+  }
+
+  .help-gif {
+    max-width: 100%;
+  }
+
+  .help-buttons button {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}

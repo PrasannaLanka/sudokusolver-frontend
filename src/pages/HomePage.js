@@ -67,8 +67,15 @@ function HomePage() {
       
     return (
         <div className="home-container">
-            <h1>LET'S SOLVE SUDOKU</h1>
-            
+            <h1 className="heading">LET'S SOLVE SUDOKU</h1>
+            <div className="button-group">
+            <div className="button-section">
+            <img
+                src={customButtonImage}
+                alt="Custom Mode"
+                className="image-button"
+                onClick={handleCustomClick}
+            />
             {/* Buttons positioned over placards */}
             <button
                 className="difficulty-button easy"
@@ -88,12 +95,9 @@ function HomePage() {
             >
                 Hard
             </button>
-            <img
-                src={customButtonImage}
-                alt="Custom Mode"
-                className="image-button"
-                onClick={handleCustomClick}
-            />
+            </div>
+      
+            </div>
 
             {showModal && (
                 <SettingsModal

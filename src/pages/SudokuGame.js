@@ -198,23 +198,18 @@ const handleLeaderboard = () => {
 
   const handleChange = (row, col, value) => {
     if (puzzle[row][col] !== 0) return;
-      if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
+  
+    if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
       const val = value ? parseInt(value) : 0;  
       const newBoard = userBoard.map((r, i) =>
         r.map((c, j) => (i === row && j === col ? val : c))
       );
-
+  
       setUserBoard(newBoard);
-
-      const newWrongCells = new Set(wrongCells);
-      if (val !== 0 && !isValidMove(newBoard, row, col, val)) {
-        newWrongCells.add(`${row}-${col}`);
-      } else {
-        newWrongCells.delete(`${row}-${col}`);
-      }
-      setWrongCells(newWrongCells);
+      setWrongCells(calculateWrongCells(newBoard, puzzle));
     }
   };
+  
 
   const checkSolution = async () => {
     if (!token) return navigate("/login");

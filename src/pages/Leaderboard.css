@@ -117,3 +117,105 @@ body {
   transform: scale(1.01);
 }
 
+
+
+/* Tablet (≤1024px) */
+@media screen and (max-width: 1024px) {
+  .leaderboard-wrapper {
+    padding: 20px;
+  }
+
+  .leaderboard-box {
+    padding: 30px;
+    min-width: auto;
+  }
+
+  .leaderboard-title {
+    font-size: 28px;
+  }
+
+  .diff-btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+/* Mobile (≤768px) */
+@media screen and (max-width: 768px) {
+  .leaderboard-wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .leaderboard-box {
+    padding: 24px;
+    width: 100%;
+    min-height: auto;
+    border-radius: 16px;
+  }
+
+  .leaderboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .leaderboard-title {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .difficulty-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .diff-btn {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    border-radius: 16px;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media screen and (max-width: 480px) {
+  .leaderboard-box {
+    padding: 16px;
+  }
+
+  .leaderboard-title {
+    font-size: 20px;
+  }
+
+  .diff-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .leaderboard-table {
+    font-size: 14px;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}

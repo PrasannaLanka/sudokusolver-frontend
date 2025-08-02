@@ -66,3 +66,24 @@
     }
   }
   
+  @media screen and (max-width: 480px) {
+    .streak-modal-content {
+      max-width: 90%;
+      padding: 20px;
+    }
+  
+    .streak-modal-content h3 {
+      font-size: 1.3rem;
+    }
+  
+    .streak-modal-content p {
+      font-size: 0.95rem;
+    }
+  
+    .streak-modal-content button {
+      width: 100%;
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+  

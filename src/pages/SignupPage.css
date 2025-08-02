@@ -12,6 +12,14 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+@media screen and (max-width: 1600px) {
+  .signup-page {
+    background-image: url('../../public/images/login2.gif'); /* For tablets/small screens */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
 
 .signup-container {
   max-width: 360px;

@@ -32,3 +32,23 @@
     font-size: 20px;
   }
   
+  @media screen and (max-width: 480px) {
+    .modal-content {
+      width: 90%;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+    }
+  
+    .modal-buttons button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px;
+    }
+  
+    .close-button {
+      top: 8px;
+      right: 12px;
+      font-size: 22px;
+    }
+  }
+  

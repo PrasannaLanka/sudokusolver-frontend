@@ -24,7 +24,8 @@ function AuthChecker() {
   const { logout, isTokenExpired } = useAuth();
 
   useEffect(() => {
-    if (isTokenExpired()) {
+    const publicRoutes = ["/", "/login", "/signup"];
+    if (!publicRoutes.includes(location.pathname) && isTokenExpired()) {
       logout();
     }
   }, [location.pathname]);

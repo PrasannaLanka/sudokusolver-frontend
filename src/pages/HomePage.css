@@ -1,129 +1,49 @@
-/* HomePage.css */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Prevent scrolling if not needed */
+    overflow: hidden;
 }
 
 .home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Ensure it covers the full viewport height */
-    width: 100vw; /* Ensure it covers the full viewport width */
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url('../../public/images/background1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
     text-align: center;
-    background-image: url('../../public/images/background.png'); /* Add your background image */
-    background-size: cover; /* Cover the entire screen */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repeating */
-    background-attachment: fixed; /* Optional: Fix the background */
-    color: white; /* White text for better contrast */
-    padding: 20px; /* Add some padding for smaller screens */
-    box-sizing: border-box; /* Ensure padding is included in height/width calculation */
-    position: relative; /* Add this to make child positioning easier */
 }
-
-.home-container h1 {
+@media screen and (max-width: 1024px) {
+    .home-container {
+        background-image: url('../../public/images/background2.png');
+    }
+}
+/* Heading styles */
+.heading {
     font-size: 4rem;
-    color: #ebf6f7; /* White text for better readability */
-    text-shadow: 2px 2px 4px rgba(80, 76, 76, 0.984); /* Add shadow for better contrast */
-    position: absolute; /* Position the h1 absolutely within the container */
-    top: 30px; /* Adjust the top position as needed */
-    left: 200px; /* Adjust the right position as needed */
-    margin: 0; /* Remove default margin */
-}
-
-.home-container p {
-    font-size: 1.2rem;
-    color: #fff; /* White text for better readability */
-    margin: 20px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better contrast */
-}
-
-/* .home-container button {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: #ff6f61;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
-/* } */ */
-
-.home-container button:hover {
-    background-color: #ff3b2f;
-    transform: scale(1.1);
-}
-
-.mascot {
-    width: 150px; /* Adjust size as needed */
-    margin-bottom: 20px;
-    animation: bounce 2s infinite; /* Add bounce animation */
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-.difficulty-button {
+    color: #ebf6f7;
+    text-shadow: 2px 2px 4px rgba(80, 76, 76, 0.984);
     position: absolute;
-    font-weight: bold;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    top: 30px;
+    left: 200px;
+    margin: 0;
 }
 
-/* Easy Button - Larger Size */
-.easy {
-    top: 28%;
-    left: 22.4%;
-    padding: 15px 40px; /* Increase padding for larger size */
-    font-size: 38px; /* Increase font size */
-    background: linear-gradient(135deg, #b2d9e2, #72da8a);
-}
-
-/* Medium Button - Medium Size */
-.medium {
-    top: 22.5%;
-    left: 38.45%;    
-    padding: 15px 20px; /* Default padding */
-    font-size: 40px; /* Default font size */
-    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-}
-
-/* Hard Button - Smaller S15ze */
-.hard {
-    top: 17.5%;
-    right: 33.1%;
-    padding: 10px 50px; /* Decrease padding for smaller size */
-    font-size: 50px; /* Decrease font size */
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-}
-
-/* Hover Effects */
-.difficulty-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
+/* Star icon button */
 .image-button {
-    position: absolute;      
-    top: 0px;               /* adjust as needed */
-    right: 75px;             /* adjust as needed */
-    width: 235px;            
+    position: absolute;
+    top: 0px;
+    right: 75px;
+    width: 235px;
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -132,4 +52,136 @@ html, body {
 .image-button:hover {
     transform: scale(1.1);
     filter: drop-shadow(0 0 6px #faee7f);
+}
+
+/* Button container */
+.button-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 180px;
+    gap: 30px;
+}
+
+/* Flexbox for buttons */
+.button-group {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Base button styling */
+.difficulty-button {
+    width: 220px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 20px 0;
+    font-size: 32px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Button colors */
+.easy {
+    background: linear-gradient(135deg, #b2d9e2, #72da8a);
+}
+
+.medium {
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+
+.hard {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+.difficulty-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Optional mascot */
+.mascot {
+    width: 150px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ------------------------- */
+/* Responsive Breakpoints    */
+/* ------------------------- */
+
+@media screen and (max-width: 1024px) {
+    .heading {
+        font-size: 3rem;
+        left: 100px;
+    }
+
+    .image-button {
+        width: 230px;
+        right: 40px;
+    }
+
+    .difficulty-button {
+        font-size: 28px;
+        padding: 18px 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .home-container {
+        align-items: center;
+    }
+
+    .heading {
+        position: static;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .image-button {
+        position: static;
+        width: 180px;
+        margin-bottom: 20px;
+    }
+
+    .button-section {
+        margin-top: 60px;
+        gap: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .difficulty-button {
+        width: 200px;
+        font-size: 24px;
+        padding: 16px 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .heading {
+        font-size: 2rem;
+    }
+
+    .image-button {
+        width: 120px;
+    }
+
+    .difficulty-button {
+        width: 180px;
+        font-size: 20px;
+        padding: 14px 0;
+    }
 }

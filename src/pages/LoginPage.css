@@ -13,6 +13,14 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+@media screen and (max-width: 1600px) {
+  .login-page {
+    background-image: url('../../public/images/login2.gif'); /* For tablets/small screens */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
 
 .login-container {
   max-width: 360px;
