@@ -26,22 +26,22 @@ This is the **React-based frontend** of the Sudoku Solver — a fun, kid-friendl
 ## 📸 Screenshots
 
 ### 🎮 Login Page  
-![Loginpage](./public/images/screenshot-login.png)
+![Loginpage](./public/images/Screenshot-login.png)
 
 ### 🎮 Home Page  
-![Homepage](./public/images/screenshot-home.png)
+![Homepage](./public/images/Screenshot-home.png)
 
 ### 🧠 Game Board  
-![Game](./public/images/screenshot-game.png)
+![Game](./public/images/Screenshot-game.png)
 
 ### 📊 Leaderboard  
-![Leaderboard](./public/images/screenshot-leaderboard.png)
+![Leaderboard](./public/images/Screenshot-leaderboard.png)
 
 ### 🙋 Help Page  
-![Help](./public/images/screenshot-help.png)
+![Help](./public/images/Screenshot-help.png)
 
 ### 🙋 Menu and streak 
-![Help](./public/images/screenshot-streak.png)
+![Help](./public/images/Screenshot-streak.png)
 
 ---
 
