@@ -1,25 +1,29 @@
 // src/pages/HelpPage.js
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import howToPlayGif from "../assets/help.png";
-import "./HelpPage.css"; // Optional for styling
-
+import "./HelpPage.css";
+import customButtonImage from "../assets/settings.png";
+import SettingsModal from "./SettingsModal";
 function HelpPage() {
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCustomClick = () => {
+    setShowModal(true); // Correct way to open modal
+  };
 
   return (
-    <div className="help-page">
-     
+    <div>
+      <img src={howToPlayGif} alt="How to Play Sudoku" className="help-gif" />
       <img
-        src={howToPlayGif}
-        alt="How to Play Sudoku"
-        className="help-gif"
+        src={customButtonImage}
+        alt="Custom Mode"
+        className="image-button"
+        onClick={handleCustomClick}
       />
 
-      <div className="help-buttons">
-        <button onClick={() => navigate("/")}>🏠 Home</button>
-        <button onClick={() => navigate("/login")}>🚪 Logout</button>
-      </div>
+      {showModal && (
+        <SettingsModal variant="others" onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 }

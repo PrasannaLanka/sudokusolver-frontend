@@ -334,55 +334,50 @@ const handleLeaderboard = () => {
         {puzzle.map((row, rIndex) => (
           <div key={rIndex} className="sudoku-row">
             {row.map((num, cIndex) => (
-          <div
-          key={cIndex}
-          id={`cell-${rIndex}-${cIndex}`}
-          tabIndex={0}
-          onClick={() => setSelectedCell({ row: rIndex, col: cIndex })}
-          className={`sudoku-cell
+              <div
+                key={cIndex}
+                id={`cell-${rIndex}-${cIndex}`}
+                tabIndex={0}
+                onClick={() => setSelectedCell({ row: rIndex, col: cIndex })}
+                className={`sudoku-cell
             ${rIndex % 3 === 0 ? "box-border-top" : ""}
             ${cIndex % 3 === 0 ? "box-border-left" : ""}
             ${rIndex === 8 ? "box-border-bottom" : ""}
             ${cIndex === 8 ? "box-border-right" : ""}
-            ${selectedCell.row === rIndex && selectedCell.col === cIndex ? "selected-cell" : ""}
+            ${
+              selectedCell.row === rIndex && selectedCell.col === cIndex
+                ? "selected-cell"
+                : ""
+            }
             ${wrongCells.has(`${rIndex}-${cIndex}`) ? "wrong-cell" : ""}
             ${puzzle[rIndex][cIndex] !== 0 ? "prefilled-cell" : "editable-cell"}
           `}
-        >
-          {userBoard[rIndex][cIndex] || ""}
-        </div>
-        
-            
+              >
+                {userBoard[rIndex][cIndex] || ""}
+              </div>
             ))}
           </div>
         ))}
       </div>
       <img
-  src={customButtonImage}
-  alt="Settings"
-  className="image-button"
-  onClick={() => setShowModal(true)}
-/>
+        src={customButtonImage}
+        alt="Settings"
+        className="image-button"
+        onClick={() => setShowModal(true)}
+      />
 
-{showModal && (
-  <SettingsModal
-    onClose={() => setShowModal(false)}
-    onHome = {handleHome}
-    onLeaderboard={handleLeaderboard}
-    onHelp={handleHelp}
-    onLogout={handleLogout}
-  />
-)}
-<ResultModal
-  show={showResultModal}
-  message={resultStatus}
-  time={formatTime(time)}
-  onClose={() => setShowResultModal(false)}
-  onNewGame={resetGame}
-  onLogout={handleLogout}
-  onHome={() => navigate("/")}
-/>
-
+      {showModal && (
+        <SettingsModal variant="others" onClose={() => setShowModal(false)} />
+      )}
+      <ResultModal
+        show={showResultModal}
+        message={resultStatus}
+        time={formatTime(time)}
+        onClose={() => setShowResultModal(false)}
+        onNewGame={resetGame}
+        onLogout={handleLogout}
+        onHome={() => navigate("/")}
+      />
 
       <div className="button-group">
         <button className="sudoku-button" onClick={checkSolution}>
@@ -392,10 +387,8 @@ const handleLeaderboard = () => {
           New Game
         </button>
         <button className="sudoku-button" onClick={handlePauseAndSave}>
-  {isPaused ? "Resume" : "Pause & Save"}
-</button>
-
-
+          {isPaused ? "Resume" : "Pause & Save"}
+        </button>
       </div>
 
       {message && <div className="sudoku-message">{message}</div>}

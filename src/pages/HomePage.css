@@ -38,16 +38,24 @@ html, body {
     margin: 0;
 }
 
-/* Star icon button */
 .image-button {
     position: absolute;
-    top: 0px;
-    right: 75px;
-    width: 235px;
+    top: 0.5rem;
+    right: 2.5rem;
+    width: 14rem;
+    max-width: 235px;
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
+
+.leaderboard-table thead th {
+  position: sticky;
+  top: 0;
+  background: #ffe6eb;
+  z-index: 1;
+}
+
 
 .image-button:hover {
     transform: scale(1.1);
@@ -126,8 +134,8 @@ html, body {
     }
 
     .image-button {
-        width: 230px;
-        right: 40px;
+        width: 180px;
+        /* right: 40px; */
     }
 
     .difficulty-button {
@@ -149,7 +157,7 @@ html, body {
 
     .image-button {
         position: static;
-        width: 180px;
+        width: 150px;
         margin-bottom: 20px;
     }
 
