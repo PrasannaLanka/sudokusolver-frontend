@@ -1,5 +1,4 @@
 // StreakModal.jsx
-import React from "react";
 import "./StreakModal.css";
 
 const StreakModal = ({ streak, lastPlayed, onClose }) => {

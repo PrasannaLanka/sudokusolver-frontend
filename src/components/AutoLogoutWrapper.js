@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const AutoLogoutWrapper = ({ children, timeout = 15 * 60 * 1000 }) => {
@@ -15,23 +15,19 @@ const AutoLogoutWrapper = ({ children, timeout = 15 * 60 * 1000 }) => {
 
   useEffect(() => {
     const handleActivity = () => {
-      
-        resetTimer();
-      
+      resetTimer();
     };
 
     resetTimer();
 
     const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
-    events.forEach((event) =>
-      window.addEventListener(event, handleActivity)
-    );
+    events.forEach((event) => window.addEventListener(event, handleActivity));
     document.addEventListener("visibilitychange", handleActivity);
 
     return () => {
       if (timerId.current) clearTimeout(timerId.current);
       events.forEach((event) =>
-        window.removeEventListener(event, handleActivity)
+        window.removeEventListener(event, handleActivity),
       );
       document.removeEventListener("visibilitychange", handleActivity);
     };

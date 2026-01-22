@@ -1,5 +1,5 @@
 // pages/SudokuGame.js
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./SudokuGame.css";
 import SettingsModal from "./SettingsModal";

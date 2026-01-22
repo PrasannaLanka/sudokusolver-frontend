@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import "./Leaderboard.css";
 import SettingsModal from "./SettingsModal";
 import customButtonImage from "../assets/settings.png";

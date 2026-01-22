@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SudokuGame from "./pages/SudokuGame";

@@ -1,7 +1,6 @@
 import "./SettingsModal.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import StreakModal from "./StreakModal";
 import api from "../api/api";
 const SettingsModal = ({ variant = "home", onClose }) => {
@@ -32,35 +31,7 @@ const SettingsModal = ({ variant = "home", onClose }) => {
     navigate("/login");
   };
 
-  const handleResumeClick = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await api.get("/resume_game", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
 
-      if (response.status === 404) {
-        alert("No saved game found!");
-        return;
-      }
-
-      const data = await response.json();
-      navigate("/play", {
-        state: {
-          resumeGame: true,
-          puzzle: data.puzzle,
-          progress: data.progress,
-          solution: data.solution,
-          time: data.time,
-        },
-      });
-    } catch (error) {
-      console.error("Error resuming game:", error);
-      alert("Failed to resume game.");
-    }
-  };
   const fetchStreak = async () => {
     try {
       const response = await api.get("/streak", {

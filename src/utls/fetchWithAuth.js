@@ -1,5 +1,5 @@
 // src/utils/fetchWithAuth.js
-import { useAuth } from "../hooks/useAuth";
+
 
 export async function fetchWithAuth(url, options = {}) {
   const token = localStorage.getItem("token");
