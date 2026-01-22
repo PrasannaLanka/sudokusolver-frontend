@@ -1,11 +1,10 @@
 // pages/SudokuGame.js
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./SudokuGame.css";
 import SettingsModal from "./SettingsModal";
-import customButtonImage from "../assets/settings.png"; 
-import ResultModal from "../components/ResultsModal.js"; 
+import customButtonImage from "../assets/settings.png";
+import ResultModal from "../components/ResultsModal.js";
 import api from "../api/api";
 const SudokuGame = () => {
   const location = useLocation();
@@ -29,7 +28,7 @@ const SudokuGame = () => {
   const token = localStorage.getItem("token");
 
   const [showModal, setShowModal] = useState(false);
-  const calculateWrongCells = (board, puzzle) => {
+  const calculateWrongCells = useCallback((board, puzzle) => {
     const wrongs = new Set();
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
@@ -41,7 +40,7 @@ const SudokuGame = () => {
       }
     }
     return wrongs;
-  };
+  }, []);
   useEffect(() => {
     if (!isPaused) {
       timerRef.current = setInterval(() => {
@@ -51,7 +50,6 @@ const SudokuGame = () => {
 
     return () => clearInterval(timerRef.current);
   }, [isPaused]);
-
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -96,7 +94,7 @@ const SudokuGame = () => {
         setSolution(response.data.solution);
         setUserBoard(response.data.puzzle.map((row) => [...row]));
         setTime(0);
-        setMessage("");
+        setMessage(response.data.message);
         setWrongCells(new Set());
         setLoading(false);
       })
@@ -110,8 +108,30 @@ const SudokuGame = () => {
           setLoading(false);
         }
       });
-  }, [difficulty, token, navigate]);
+  }, [
+    difficulty,
+    token,
+    navigate,
+    location.state,
+    calculateWrongCells,
+    message,
+  ]);
+  const handleChange = useCallback(
+    (row, col, value) => {
+      if (puzzle[row][col] !== 0) return;
 
+      if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
+        const val = value ? parseInt(value) : 0;
+        const newBoard = userBoard.map((r, i) =>
+          r.map((c, j) => (i === row && j === col ? val : c)),
+        );
+
+        setUserBoard(newBoard);
+        setWrongCells(calculateWrongCells(newBoard, puzzle));
+      }
+    },
+    [puzzle, userBoard, calculateWrongCells],
+  );
   // Keyboard navigation between cells
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -163,7 +183,7 @@ const SudokuGame = () => {
 
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [selectedCell, puzzle, isPaused]);
+  }, [selectedCell, puzzle, isPaused, handleChange]);
 
   const isValidMove = (board, row, col, val) => {
     for (let i = 0; i < 9; i++) {
@@ -178,20 +198,6 @@ const SudokuGame = () => {
       }
     }
     return true;
-  };
-
-  const handleChange = (row, col, value) => {
-    if (puzzle[row][col] !== 0) return;
-
-    if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
-      const val = value ? parseInt(value) : 0;
-      const newBoard = userBoard.map((r, i) =>
-        r.map((c, j) => (i === row && j === col ? val : c)),
-      );
-
-      setUserBoard(newBoard);
-      setWrongCells(calculateWrongCells(newBoard, puzzle));
-    }
   };
 
   const checkSolution = async () => {
@@ -290,7 +296,7 @@ const SudokuGame = () => {
         setSolution(response.data.solution);
         setUserBoard(response.data.puzzle.map((row) => [...row]));
         setTime(0);
-        setMessage("");
+        setMessage(response.data.message);
         setWrongCells(new Set());
         setLoading(false);
       })
