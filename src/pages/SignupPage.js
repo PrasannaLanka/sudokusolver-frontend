@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupPage.css";
-
+import tryLocalFallback from "../api/api";
 const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,23 +17,23 @@ const SignupPage = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous error on new submit
+    setError("");
+
     try {
-      const res = await fetch("http://localhost:5000/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+      await tryLocalFallback({
+        method: "post",
+        url: "/signup",
+        data: { username, password },
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        navigate("/login");
-      } else {
-        setError(data.error || "Signup failed");
-      }
+      navigate("/login");
     } catch (err) {
-      setError("Network error, please try again later");
+      if (err.response) {
+        if (err.response) {
+          setError(err.response.data?.error || "Login failed");
+        } else {
+          setError("Network error, please try again later");
+        }
+      }
     }
   };
 

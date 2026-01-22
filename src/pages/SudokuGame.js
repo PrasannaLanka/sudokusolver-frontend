@@ -6,7 +6,7 @@ import "./SudokuGame.css";
 import SettingsModal from "./SettingsModal";
 import customButtonImage from "../assets/settings.png"; 
 import ResultModal from "../components/ResultsModal.js"; 
-
+import api from "../api/api";
 const SudokuGame = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,31 +28,29 @@ const SudokuGame = () => {
   // Get token from localStorage
   const token = localStorage.getItem("token");
 
- 
-const [showModal, setShowModal] = useState(false);
-const calculateWrongCells = (board, puzzle) => {
-  const wrongs = new Set();
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (puzzle[i][j] === 0 && board[i][j] !== 0) {
-        if (!isValidMove(board, i, j, board[i][j])) {
-          wrongs.add(`${i}-${j}`);
+  const [showModal, setShowModal] = useState(false);
+  const calculateWrongCells = (board, puzzle) => {
+    const wrongs = new Set();
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (puzzle[i][j] === 0 && board[i][j] !== 0) {
+          if (!isValidMove(board, i, j, board[i][j])) {
+            wrongs.add(`${i}-${j}`);
+          }
         }
       }
     }
-  }
-  return wrongs;
-};
-useEffect(() => {
-  if (!isPaused) {
-    timerRef.current = setInterval(() => {
-      setTime((prev) => prev + 1);
-    }, 1000);
-  }
+    return wrongs;
+  };
+  useEffect(() => {
+    if (!isPaused) {
+      timerRef.current = setInterval(() => {
+        setTime((prev) => prev + 1);
+      }, 1000);
+    }
 
-  return () => clearInterval(timerRef.current);
-}, [isPaused]);
-
+    return () => clearInterval(timerRef.current);
+  }, [isPaused]);
 
   useEffect(() => {
     if (!token) {
@@ -89,8 +87,8 @@ useEffect(() => {
     }
 
     setLoading(true);
-    axios
-      .get(`http://localhost:5000/generate?difficulty=${difficulty}`, {
+    api
+      .get(`/generate?difficulty=${difficulty}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -188,7 +186,7 @@ useEffect(() => {
     if (value === "" || value === 0 || /^[1-9]$/.test(value)) {
       const val = value ? parseInt(value) : 0;
       const newBoard = userBoard.map((r, i) =>
-        r.map((c, j) => (i === row && j === col ? val : c))
+        r.map((c, j) => (i === row && j === col ? val : c)),
       );
 
       setUserBoard(newBoard);
@@ -200,10 +198,10 @@ useEffect(() => {
     if (!token) return navigate("/login");
     setIsPaused(true);
     try {
-      const response = await axios.post(
-        "http://localhost:5000/check",
+      const response = await api.post(
+        "/check",
         { board: userBoard, solution },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       setMessage(response.data.message);
@@ -212,8 +210,8 @@ useEffect(() => {
 
       // Optional: Send stats to backend
       if (response.data.status === "success") {
-        await axios.post(
-          "http://localhost:5000/record_game",
+        await api.post(
+          "/record_game",
           {
             timeTaken: time,
             difficulty: difficulty,
@@ -222,14 +220,14 @@ useEffect(() => {
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true, // <--- IMPORTANT
-          }
+          },
         );
-        await axios.post(
-          "http://localhost:5000/update_streak",
+        await api.post(
+          "/update_streak",
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
         resetGameAfterWin();
       }
@@ -249,8 +247,8 @@ useEffect(() => {
     if (!isPaused) {
       // We're pausing
       try {
-        await axios.post(
-          "http://localhost:5000/save_game",
+        await api.post(
+          "/save_game",
           {
             puzzle,
             progress: userBoard,
@@ -258,7 +256,7 @@ useEffect(() => {
           },
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
         setIsPaused(true);
       } catch (error) {
@@ -283,8 +281,8 @@ useEffect(() => {
     setIsPaused(false);
     setShowResultModal(false);
     setLoading(true);
-    axios
-      .get(`http://localhost:5000/generate?difficulty=${difficulty}`, {
+    api
+      .get(`/generate?difficulty=${difficulty}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -315,8 +313,8 @@ useEffect(() => {
     }
     setIsPaused(false);
     setLoading(true);
-    axios
-      .get(`http://localhost:5000/generate?difficulty=${difficulty}`, {
+    api
+      .get(`/generate?difficulty=${difficulty}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

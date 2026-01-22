@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Leaderboard.css";
 import SettingsModal from "./SettingsModal";
 import customButtonImage from "../assets/settings.png";
-
+import api from "../api/api";
 const Leaderboard = () => {
   const [difficulty, setDifficulty] = useState("easy");
   const [viewMode, setViewMode] = useState("time"); // "time" or "streak"
@@ -11,13 +11,13 @@ const Leaderboard = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const url =
+    const endpoint =
       viewMode === "streak"
-        ? "http://localhost:5000/streak_leaderboard"
-        : `http://localhost:5000/leaderboard?difficulty=${difficulty}`;
+        ? "/streak_leaderboard"
+        : `/leaderboard?difficulty=${difficulty}`;
 
-    axios
-      .get(url)
+    api
+      .get(endpoint)
       .then((res) => setScores(res.data))
       .catch((err) => console.error(err));
   }, [difficulty, viewMode]);

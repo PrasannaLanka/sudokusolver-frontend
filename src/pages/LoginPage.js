@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
-
+import tryLocalFallback from "../api/api";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,27 +18,24 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // clear previous errors
+    setError("");
     try {
-      const res = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+      const res = await tryLocalFallback({
+        method: "post",
+        url: "/login",
+        data: { username, password },
       });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        localStorage.setItem("token", data.token);
-        navigate("/home");
-      } else {
-        setError(data.error || "Login failed");
-      }
+      localStorage.setItem("token", res.data.token);
+      navigate("/home");
     } catch (err) {
-      setError("Network error, please try again later");
+      if (err.response) {
+        setError(err.response.data?.error || "Login failed");
+      } else {
+        setError("Network error, please try again later");
+      }
     }
   };
-
   return (
     <div className="login-page">
       <div className="login-container">

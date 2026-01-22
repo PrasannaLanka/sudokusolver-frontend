@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StreakModal from "./StreakModal";
-
+import api from "../api/api";
 const SettingsModal = ({ variant = "home", onClose }) => {
   const navigate = useNavigate();
 
@@ -35,8 +35,7 @@ const SettingsModal = ({ variant = "home", onClose }) => {
   const handleResumeClick = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/resume_game", {
-        method: "GET",
+      const response = await api.get("/resume_game", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,7 +63,7 @@ const SettingsModal = ({ variant = "home", onClose }) => {
   };
   const fetchStreak = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/streak", {
+      const response = await api.get("/streak", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
