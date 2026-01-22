@@ -28,7 +28,7 @@ function AuthChecker() {
     if (!publicRoutes.includes(location.pathname) && isTokenExpired()) {
       logout();
     }
-  }, [location.pathname]);
+  }, [location.pathname, isTokenExpired, logout]);
 
   return null;
 }
