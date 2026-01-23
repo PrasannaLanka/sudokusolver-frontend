@@ -38,11 +38,12 @@
 
 /* Grid styling */
 .sudoku-grid {
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(0, 10, 15) ; 
-  padding: 0;
+  width: min(95vw, 450px);     /* won't exceed ~95% of screen width */
+  max-width: 95vw;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 1.5rem;
+  background-color: rgb(0, 10, 15);
 }
 
 .sudoku-row {
@@ -190,11 +191,11 @@
     font-size: 1.3rem;
   }
 
-  .sudoku-cell {
-    /* width: 60px;
-    height: 60px; */
-    font-size: 1.4rem;
-  }
+.sudoku-cell {
+  width:  clamp(38px, 10.5vmin, 60px);
+  height: clamp(38px, 10.5vmin, 60px);
+  font-size: clamp(0.95rem, 4.3vmin, 1.7rem);
+}
 
   .sudoku-button {
     font-size: 1rem;
@@ -205,7 +206,12 @@
 /* Mobile: ≤768px */
 @media screen and (max-width: 768px) {
   .sudoku-container {
-    padding: 1rem;
+    padding: 1rem 0.6rem;           /* less side padding */
+    box-sizing: border-box;
+  }
+
+  .sudoku-grid {
+    margin: 0 auto 1.2rem;         /* center + less bottom space */
   }
 
   .sudoku-title {
@@ -234,12 +240,23 @@
     align-items: center;
     gap: 10px;
   }
+  .sudoku-cell {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  }
+
+  .sudoku-cell.box-border-top,
+  .sudoku-cell.box-border-left,
+  .sudoku-cell.box-border-right,
+  .sudoku-cell.box-border-bottom {
+    border-width: 3px !important;   /* or even 2.5px */
+  }
 }
 
 /* Small Mobile: ≤480px */
 @media screen and (max-width: 480px) {
   .sudoku-container {
-    padding: 0.5rem;
+    padding: 0.8rem 0.4rem;
   }
 
   .sudoku-title {
