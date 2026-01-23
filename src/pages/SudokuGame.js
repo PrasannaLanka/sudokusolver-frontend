@@ -24,6 +24,8 @@ const SudokuGame = () => {
   const [resultStatus, setResultStatus] = useState(""); // 'You won!' or 'Invalid solution' etc.
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef(null);
+  const hiddenInputRef = useRef(null);
+
   // Get token from localStorage
   const token = localStorage.getItem("token");
 
@@ -354,6 +356,29 @@ const SudokuGame = () => {
 
   return (
     <div className="sudoku-container">
+      <input
+        ref={hiddenInputRef}
+        type="text"
+        inputMode="numeric"
+        pattern="[1-9]"
+        maxLength={1}
+        className="hidden-sudoku-input"
+        onChange={(e) => {
+          const val = e.target.value;
+
+          if (selectedCell.row === null || selectedCell.col === null) return;
+          if (puzzle[selectedCell.row][selectedCell.col] !== 0) return;
+
+          if (/^[1-9]$/.test(val)) {
+            handleChange(selectedCell.row, selectedCell.col, val);
+          } else {
+            handleChange(selectedCell.row, selectedCell.col, 0);
+          }
+
+          e.target.value = ""; // clear after every input
+        }}
+      />
+
       <h1 className="sudoku-title">Sudoku - {difficulty.toUpperCase()}</h1>
       <div className="sudoku-timer">Time: {formatTime(time)}</div>
 
@@ -365,7 +390,10 @@ const SudokuGame = () => {
                 key={cIndex}
                 id={`cell-${rIndex}-${cIndex}`}
                 tabIndex={0}
-                onClick={() => setSelectedCell({ row: rIndex, col: cIndex })}
+                onClick={() => {
+                  setSelectedCell({ row: rIndex, col: cIndex });
+                  hiddenInputRef.current?.focus({ preventScroll: true });
+                }}
                 className={`sudoku-cell
             ${rIndex % 3 === 0 ? "box-border-top" : ""}
             ${cIndex % 3 === 0 ? "box-border-left" : ""}
