@@ -1,0 +1,134 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;            /* 🔥 IMPORTANT */
+  overflow-x: hidden;      /* allow vertical scroll */
+  overflow-y: auto;        /* 🔥 ENABLE SCROLL */
+}
+
+/* PAGE CONTAINER */
+
+
+/* HERO */
+.hero {
+  width: 100%;
+  /* padding: 3rem 1rem; */
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  color: #374151;
+  max-width: 650px;
+  padding : 1rem 1rem;
+  margin: auto auto;
+  line-height: 1.6;
+}
+
+/* FEATURES */
+.features {
+  width: 100%;
+  padding: 1rem 1rem;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2.2rem;
+  color: #2563eb;
+  margin-bottom: 2.5rem;
+}
+
+/* 3 x 2 GRID */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, #dbfed0, #c7d2fe);
+  padding: 1.4rem;
+  border-radius: 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1f2937;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: default;
+}
+
+/* 🔥 HOVER EFFECT */
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}A
+
+/* CTA */
+.final-cta {
+  width: 100%;
+  padding: 1rem 1rem 5rem;
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-size: 2.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.final-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 1.8rem;
+}
+
+/* BUTTON */
+.cta-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 14px 34px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}

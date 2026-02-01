@@ -11,7 +11,7 @@ import AutoLogoutWrapper from "./components/AutoLogoutWrapper";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
 import Leaderboard from './pages/Leaderboard';
-
+import LandingPage from "./pages/LandingPage";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -39,7 +39,7 @@ function App() {
       <AutoLogoutWrapper>
         <AuthChecker />
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route
@@ -58,18 +58,22 @@ function App() {
               </PrivateRoute>
             }
           />
-           <Route
-    path="/help"
-    element={
-      <PrivateRoute>
-        <HelpPage />
-      </PrivateRoute>
-    }
-  />
-  <Route path="/leaderboard" element={
-  <PrivateRoute><Leaderboard /></PrivateRoute>
-    } />
-
+          <Route
+            path="/help"
+            element={
+              <PrivateRoute>
+                <HelpPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/leaderboard"
+            element={
+              <PrivateRoute>
+                <Leaderboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AutoLogoutWrapper>
     </Router>
