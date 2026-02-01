@@ -4,6 +4,9 @@ This is the **React-based frontend** of the Sudoku Solver — a fun, kid-friendl
 
 ---
 
+## 🔗 Website is now live on Vercel and Railway  
+👉 [Sudoku Game for kids](https://sudokugameforkids.vercel.app/)
+
 ## 🔗 Backend Repo  
 👉 [Sudoku Backend](https://github.com/PrasannaLanka/sudokusolver-backend.git)
 
